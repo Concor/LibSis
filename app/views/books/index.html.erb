@@ -1,0 +1,46 @@
+<div class="card">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-10">
+        <h2>Книжный фонд Библиотеки №<%=@library.number%></h2>
+      </div>
+      <div class="col-md-2 text-right">
+        <%= link_to '', new_library_book_path(@library), class: "btn btn-outline-success ti-plus" %>
+        <%= link_to 'Назад', library_path(@library), class:'btn btn-outline-primary' %>
+      </div>
+    </div>
+
+    <div class="table-responsive m-t-40">
+      <table id="TableDataodel" class="table table-bordered table-striped table-sm">
+          <thead>
+              <tr>
+                  <th class="text-center" data-searchable="false">#</th>
+                  <th class="text-center">Шифр</th>
+                  <th>Название</th>
+                  <th>Автор</th>
+                  <th class="text-center">Издательство</th>
+                  <th class="text-center">Год издания</th>
+                  <th class="text-center" data-orderable="false" data-searchable="false"></th>
+              </tr>
+          </thead>
+          <tbody>
+              <% @library.books.each do |book| %>
+                <tr>
+                  <td class="text-center"><%= book.id %></td>
+                  <td class="text-center"><%= book.cipher %></td>
+                  <td><%= book.name %></td>
+                  <td><%= book.author %></td>
+                  <td class="text-center"><%= book.publ %></td>
+                  <td class="text-center"><%= book.publ_y %></td>
+                  <td class="text-center"><%= link_to '', library_book_path(@library,book), class: "btn btn-outline-info ti-book", target:'_blank'  %>
+                
+                  <%= link_to '', [book.library, book], class: "btn btn-outline-danger ti-trash",
+                          method: :delete,
+                          data: { confirm: 'Вы уверены, что хотите удалить: "'+book.name+'" и все что с ней связано?'} %></td>
+                </tr>
+              <% end %>
+          </tbody>
+        </table>
+      </div>
+  </div>
+</div>

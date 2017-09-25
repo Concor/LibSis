@@ -1,0 +1,126 @@
+<div class="row">
+    <!-- Column -->
+    <div class="col-lg-4 col-xlg-3 col-md-5">
+        <div class="card">
+            <div class="card-body">
+                    <h4 class="card-title"><%= @subscriber.sname%> <%= @subscriber.fname%> <%= @subscriber.mname%></h4>
+                    <h6 class="card-subtitle"><%= @subscriber.number%><br><%= @library.name%></h6>
+                    <hr>
+                    <center><%= link_to '', edit_library_subscriber_path(@library,@subscriber), class: " btn btn-outline-success ti-pencil" %> <%= link_to '', [@subscriber.library, @subscriber], class: "btn btn-outline-danger ti-trash",
+                      method: :delete,
+                      data: { confirm: 'Вы уверены, что хотите удалить читателя: "'+@subscriber.sname+'" и все что с ним связано?' } %></center>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <small class="text-muted">Телефон</small>
+                <h6><%= @subscriber.phone%></h6>
+                <small class="text-muted p-t-30 db">Адрес</small>
+                <h6><%= @subscriber.address%></h6>
+                <div class="map-box" id="map-for-subscriber" style="height: 150px;">
+                </div>
+                <script type="text/javascript">
+                    ymaps.ready(init);
+                    function init() {
+                        var myMap = new ymaps.Map('map-for-subscriber', {
+                            center: [55.753994, 37.622093],
+                            zoom: 9
+                        });
+                        ymaps.geocode('<%= @subscriber.address%>', {
+                            results: 1
+                        }).then(function (res) {
+                                var firstGeoObject = res.geoObjects.get(0),
+                                coords = firstGeoObject.geometry.getCoordinates(),
+                                bounds = firstGeoObject.properties.get('boundedBy');
+                                firstGeoObject.options.set('preset', 'islands#darkBlueDotIconWithCaption');
+                                firstGeoObject.properties.set('iconCaption', firstGeoObject.getAddressLine());
+                                myMap.geoObjects.add(firstGeoObject);
+                                myMap.setBounds(bounds, {
+                                    checkZoomRange: true
+                                });
+                            });
+                    }
+                </script>
+            </div>
+        </div>
+    </div>
+    <!-- Column -->
+    <!-- Column -->
+    <div class="col-lg-8 col-xlg-9 col-md-7">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Выдать книгу читателю <%=@subscriber.fname+' '+@subscriber.sname%></h4>
+                <% if params['error_serch'] == "1" %>
+                        <div class="alert alert-warning"> <i class="ti-user"></i> Книга с Шифром <strong><%=params["cipher"]%></strong> не найдена в <%=@library.name%>. Книга не выдана.
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">×</span> </button>
+                        </div>
+                <% end %>
+                <%= form_for ([@library, @subscriber.issues.build]), {:class => 'form'} do |f| %>
+                    <div class="form-group">
+                        <%= f.label :number, 'Шифр книги' %>
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="ti-book"></i></div>
+                            <%= text_field_tag(:cipher, "",class: 'form-control')  %>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <%= f.label :d_start, 'Дата выдачи' %>
+                                <div class="input-group">
+                                    <div class="input-group-addon"><i class="ti-calendar"></i></div>
+                                    <%= f.date_field :d_start, class: 'form-control', placeholder: "дд.мм.гггг", value: Time.now.strftime("%d.%m.%Y") %>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <%= f.label :d_end, 'Дата возврата' %>
+                                <div class="input-group">
+                                    <div class="input-group-addon"><i class="ti-calendar"></i></div>
+                                    <%= f.date_field :d_end, class: 'form-control', placeholder: "дд.мм.гггг" %>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    
+                    <%= f.hidden_field :subscriber_id, value: @subscriber.id %>
+                    <%= f.submit 'Выдать', class: 'btn btn-success' %>
+                <% end %>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+
+                <h4 class="card-title">Выдачи</h4>
+
+                <div class="table-responsive">
+                      <table id="TableDataodel" class="table table-bordered table-striped table-sm">
+                        <thead>
+                          <tr>
+                            <th class="text-center">Шифр</th>
+                            <th>Книга</th>
+                            <th class="text-center">Выдача</th>
+                            <th class="text-center">Возврат</th>
+                            <th class="text-center" data-orderable="false" data-searchable="false"></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                            <% @issues.each do |issue| %>
+                                <tr>
+                                  <td class="text-center"><%= issue.book.cipher %></td>
+                                  <td><%= issue.book.name %></td>
+                                  <td class="text-center"><%= issue.d_start %></td>
+                                  <td class="text-center"><%= issue.d_end %></td>
+                                  <td class="text-center"><%= link_to '', edit_library_issue_path(@library,issue), class: "btn btn-outline-success ti-pencil", target:'_blank'  %></td>
+                                </tr>
+                            <% end %>
+                        </tbody>
+                      </table>
+                    </div>                             
+            </div>
+        </div>
+    </div>
+    <!-- Column -->
+</div>

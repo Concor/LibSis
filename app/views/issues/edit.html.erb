@@ -1,0 +1,56 @@
+<div class="row">
+    <!-- Column -->
+    <div class="col-lg-4 col-xlg-3 col-md-5">
+        <div class="card">
+            <div class="card-body">
+                    <h4 class="card-title">Выдача #<%=@issue.id%></h4>
+                    <h6 class="card-subtitle"><%= @library.name%></h6>
+                    <hr>
+                    <center><%= link_to '', [@issue.book.library, @issue], class: "btn btn-outline-danger ti-trash",
+                      method: :delete,
+                      data: { confirm: 'Вы уверены, что хотите удалить выдачу?' } %></center>
+            </div>
+        </div>
+    </div>
+    <!-- Column -->
+    <!-- Column -->
+    <div class="col-lg-8 col-xlg-9 col-md-7">
+        <div class="card">
+            <div class="card-body">
+                <h4>Книга</h4>
+                <p><strong>Название</strong>: <%=@book.name%><br><strong>Шифр</strong>: <%=@book.cipher%></p>
+                <hr>
+                <h4>Выдана</h4>
+                <p><strong>Ф.И.О.</strong>: <%=@subscriber.sname%> <%=@subscriber.fname%> <%=@subscriber.mname%></p>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <%= form_for ([@library, @issue]), {:class => 'form'} do |f| %>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <%= f.label :d_start, 'Дата выдачи' %> <span class="text-danger">*</span>
+                                <div class="input-group">
+                                    <div class="input-group-addon"><i class="ti-calendar"></i></div>
+                                    <%= f.date_field :d_start, class: 'form-control', placeholder: "дд.мм.гггг" %>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <%= f.label :d_end, 'Дата возврата' %>
+                                <div class="input-group">
+                                    <div class="input-group-addon"><i class="ti-calendar"></i></div>
+                                    <%= f.date_field :d_end, class: 'form-control', placeholder: "дд.мм.гггг" %>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <%= f.submit 'Изменить даты', class: 'btn btn-success' %>
+                <% end %>
+            </div>
+        </div>
+    </div>
+    <!-- Column -->
+</div>

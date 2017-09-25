@@ -1,0 +1,53 @@
+<div class="card">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-9">
+        <h3><%= @library.number %> | <%= @library.name %></h3>
+        <p><%= @library.address %></p>
+      </div>
+      <div class="col-md-3 text-right">
+        <%= link_to '', edit_library_path(@library), class: "btn btn-outline-success ti-pencil", data: { pack: 'default' }  %> <%= link_to '', library_path(@library), class: "btn btn-outline-danger ti-trash",
+                    method: :delete,
+                    data: { confirm: 'Вы уверены, что хотите удалить: "'+@library.name+'" и все что с ней связано?', pack: 'default' } %>
+      </div>
+    </div>
+    <%= link_to 'Книжный фонд Библиотеки №'+@library.number, library_books_path(@library),class: "btn waves-effect waves-light btn-outline-info"%>
+    <%= link_to 'Читатели Библиотеки №'+@library.number, library_subscribers_path(@library),class: "btn waves-effect waves-light btn-outline-info"%>
+    
+    <%= link_to 'Назад к Библиотекам', libraries_path, class: 'pull-right btn waves-effect waves-light btn-outline-primary' %>
+  </div>
+</div>
+<div class="row el-element-overlay">
+  <div class="col-md-12">
+      <h4 class="card-title">Сотрудники</h4>
+      <h6 class="card-subtitle m-b-20 text-muted"><%= @library.name %></h6>
+  </div>
+  <% @library.workers.each do |worker| %>
+  <div class="col-lg-3 col-md-6">
+      <div class="card">
+          <div class="el-card-item">
+              <div class="el-card-avatar el-overlay-1"> <img src="<%=worker.avatar_url%>" alt="<%= worker.fname+' '+worker.sname %>">
+                  <div class="el-overlay">
+                      <ul class="el-info">
+                          <li><%= link_to ('<i class="icon-magnifier"></i>').html_safe, edit_library_worker_path(@library,worker), class: "btn default btn-outline image-popup-vertical-fit" %>
+                          </li>
+                          
+                      </ul>
+                  </div>
+              </div>
+              <div class="el-card-content">
+                  <h3 class="box-title"><%= worker.fname+' '+worker.sname %></h3> <small><%= worker.post %></small>
+                  <br> </div>
+          </div>
+      </div>
+  </div>
+  <% end %>
+  <div class="col-lg-3 col-md-6">
+      <div class="card">
+              <div class="card-body text-center">
+                  <%= link_to 'Добавить сотрудника', new_library_worker_path(@library) %>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>

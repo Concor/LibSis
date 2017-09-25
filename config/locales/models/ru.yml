@@ -1,0 +1,45 @@
+ru:
+  activerecord:
+    models:
+      library: "Библиотека"
+      worker: "Сотрудник"
+      subscriber: "Абонент"
+      book: "Книга"
+      issue: "Выдача"
+    attributes:
+      library:
+        id: "Идентификатор библиотеки"
+        number: "Номер библиотеки"
+        name: "Название библиотеки"
+        address: "Адрес библиотеки"
+        avatar: "Фото библиотеки"
+      book:
+        id: "Идентификатор книги"
+        library_id: "Идентификатор библиотеки"
+        name: "Название"
+        author: "Автор"
+        cipher: "Шифр"
+        publ: "Издательство"
+        publ_y: "Год издания"
+        price: "Цена"
+        date: "Дата поступления"
+      worker:
+        id: "Идентификатор сотрудника"
+        library_id: "Идентификатор библиотеки"
+        sname: "Фамилия"
+        fname: "Имя"
+        mname: "Отчество"
+        birthday: "Дата рождения"
+        start_date: "Дата начала работы"
+        education: "Образование"
+        post: "Должность"
+        avatar: "Фото сотрудника"
+      subscriber:
+        id: "Идентификатор абонента"
+        library_id: "Идентификатор библиотеки"
+        number: "Номер билета"
+        sname: "Фамилия"
+        fname: "Имя"
+        mname: "Отчество"
+        address: "Адрес"
+        phone: "Телефон"

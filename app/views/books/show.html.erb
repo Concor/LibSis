@@ -1,0 +1,116 @@
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+            	<div class="row">
+			      <div class="col-md-9">
+			        <h2><%=@book.name%></h2>
+			      </div>
+			      <div class="col-md-3 text-right">
+			      	<%= link_to '', edit_library_book_path(@library,@book), class: "btn btn-outline-success ti-pencil", data: { pack: 'default' }  %>
+            		<%= link_to '', [@book.library, @book], class: "btn btn-outline-danger ti-trash",
+                    method: :delete,
+                    data: { confirm: 'Вы уверены, что хотите удалить: "'+@book.name+'" и все что с ней связано?', pack: 'default' } %>
+			      </div>
+			    </div>
+            	
+            	<p><%=@book.author%> / <%=@book.publ%></p>
+                <div class="row">
+                    <div class="col-md-3 col-xs-6 b-r"> <strong>Шифр</strong>
+                        <br>
+                        <p class="text-muted"><%=@book.cipher%></p>
+                    </div>
+                    <div class="col-md-3 col-xs-6 b-r"> <strong>Год издания</strong>
+                        <br>
+                        <p class="text-muted"><%=@book.publ_y%></p>
+                    </div>
+                    <div class="col-md-3 col-xs-6 b-r"> <strong>Дата поступления</strong>
+                        <br>
+                        <p class="text-muted"><%=@book.date%></p>
+                    </div>
+                    <div class="col-md-3 col-xs-6"> <strong>Цена</strong>
+                        <br>
+                        <p class="text-muted"><%=@book.price%></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Выдать книгу</h4>
+                <% if params['error_serch'] == "1" %>
+            			<div class="alert alert-warning"> <i class="ti-user"></i> Абонент с читательским билетом <strong><%=params["number"]%></strong> не найден в <%=@library.name%>. Книга не выдана.
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">×</span> </button>
+                        </div>
+				<% end %>
+                <%= form_for ([@library, @book.issues.build]), {:class => 'form'} do |f| %>
+                    <div class="form-group">
+                    	<%= f.label :number, 'Номер читательского билета' %>
+                    	<div class="input-group">
+                    		<div class="input-group-addon"><i class="ti-ticket"></i></div>
+                        	<%= text_field_tag(:number, "",class: 'form-control', placeholder: 'XXXXXXX')  %>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                    	<%= f.label :d_start, 'Дата выдачи' %>
+                    	<div class="input-group">
+                    		<div class="input-group-addon"><i class="ti-calendar"></i></div>
+                        	<%= f.date_field :d_start, class: 'form-control', placeholder: "дд.мм.гггг", value: Time.now.strftime("%d.%m.%Y") %>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                    	<%= f.label :d_end, 'Дата возврата' %>
+                    	<div class="input-group">
+                    		<div class="input-group-addon"><i class="ti-calendar"></i></div>
+                        	<%= f.date_field :d_end, class: 'form-control', placeholder: "дд.мм.гггг" %>
+                        </div>
+                    </div>
+                 	<%= f.hidden_field :book_id, value: @book.id %>
+                    <%= f.submit 'Выдать', class: 'btn btn-success' %>
+                <% end %>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-9">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Выдачи</h4>
+                <div class="table-responsive">
+                      <table id="TableDataodel" class="table table-bordered table-striped table-sm">
+                        <thead>
+                          <tr>
+                            <th class="text-center" data-searchable="false">#</th>
+                            <th class="text-center">Номер билета</th>
+                            <th colspan="3">ФИО</th>
+                            <th class="text-center">Выдача</th>
+                            <th class="text-center">Возврат</th>
+                            <th class="text-center" data-orderable="false" data-searchable="false"></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                            <% @book_issues.each do |book_issue| %>
+                                <tr>
+                                  <td class="text-center"><%= book_issue.id %></td>
+                                  <td class="text-center"><%= book_issue.subscriber.number %></td>
+                                  <td><%= book_issue.subscriber.sname %></td>
+                                  <td><%= book_issue.subscriber.fname %></td>
+                                  <td><%= book_issue.subscriber.mname %></td>
+                                  <td class="text-center"><%= book_issue.d_start %></td>
+                                  <td class="text-center"><%= book_issue.d_end %></td>
+                                  <td class="text-center"><%= link_to '', library_subscriber_path(@library,book_issue.subscriber), class: "btn btn-outline-info ti-user", target:'_blank'  %> <%= link_to '', edit_library_issue_path(@library,book_issue), class: "btn btn-outline-success ti-pencil", target:'_blank'  %></td>
+                                </tr>
+                            <% end %>
+                        </tbody>
+                      </table>
+                    </div>
+
+
+                             
+            </div>
+        </div>
+    </div>
+</div>

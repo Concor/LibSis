@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  library: one
+  name: MyText
+  author: MyText
+  cipher: MyString
+  publ: MyString
+  publ_y: 1
+  price: 1.5
+  date: 2017-09-17
+
+two:
+  library: two
+  name: MyText
+  author: MyText
+  cipher: MyString
+  publ: MyString
+  publ_y: 1
+  price: 1.5
+  date: 2017-09-17

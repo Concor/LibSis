@@ -1,0 +1,45 @@
+<div class="card">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-8">
+        <h2>Читатели Библиотеки №<%=@library.number%></h2>
+      </div>
+      <div class="col-md-4 text-right">
+
+        <%= link_to '', new_library_subscriber_path(@library), class: "btn btn-outline-success ti-plus" %>
+        <%= link_to 'Назад', library_path(@library), class:'btn btn-outline-primary' %>
+      </div>
+    </div>
+    <div class="table-responsive m-t-40">
+      <table id="TableDataodel" class="table table-bordered table-striped table-sm">
+        <thead>
+          <tr>
+            <th class="text-center" data-searchable="false">#</th>
+            <th class="text-center">Номер билета</th>
+            <th colspan="3">ФИО</th>
+            <th class="text-center">Телефон</th>
+            <th>Адрес</th>
+            <th class="text-center" data-orderable="false" data-searchable="false"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @library.subscribers.each do |subscriber| %>
+            <tr>
+              <td class="text-center"><%= subscriber.id %></td>
+              <td class="text-center"><%= subscriber.number %></td>
+              <td><%= subscriber.sname %></td>
+              <td><%= subscriber.fname %></td>
+              <td><%= subscriber.mname %></td>
+              <td class="text-center"><%= subscriber.phone %></td>
+              <td><%= subscriber.address %></td>
+              <td class="text-center"><%= link_to '', library_subscriber_path(@library,subscriber), class: "btn btn-outline-info ti-book", target:'_blank' %>
+              <%= link_to '', [subscriber.library, subscriber], class: "btn btn-outline-danger ti-trash",
+                      method: :delete,
+                      data: { confirm: 'Вы уверены, что хотите удалить читателя: "'+subscriber.sname+'" и все что с ним связано?' } %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

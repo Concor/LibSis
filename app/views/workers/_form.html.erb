@@ -1,0 +1,84 @@
+<%= form_for ([@library, @library.worker.build]), {:multipart => true} do |f| %>
+  <div class="form-body">
+    <h3 class="card-title">Сотрудник</h3>
+    <hr>
+  </div>
+  <div class="row p-t-20">
+    <div class="col-md-6">
+        <div class="form-group">
+            <%= f.label :fname, 'Имя', class: 'control-label' %>
+            <%= f.text_field :fname, class: 'form-control', placeholder: "Иван" %>
+            <small class="form-control-feedback"> Введите Имя сотрудника </small>
+        </div>
+    </div>
+    <!--/span-->
+    <div class="col-md-6">
+        <div class="form-group">
+            <%= f.label :sname, 'Фамилия', class: 'control-label' %>
+            <%= f.text_field :sname, class: 'form-control', placeholder: "Иванов" %>
+            <small class="form-control-feedback"> Введите Фамилию сотрудника </small>
+        </div>
+    </div>
+    <!--/span-->
+  </div>
+  <!--/row-->
+  <div class="row">
+      <div class="col-md-6">
+          <div class="form-group">
+            <%= f.label :mname, 'Отчество', class: 'control-label' %>
+            <%= f.text_field :mname, class: 'form-control', placeholder: "Иванов" %>
+            <small class="form-control-feedback"> Введите Отчество сотрудника </small>
+        </div>
+      </div>
+      <!--/span-->
+      <div class="col-md-6">
+          <div class="form-group">
+              <%= f.label :birthday, 'Дата рождения', class: 'control-label' %>
+              <%= f.date_field :birthday, class: 'form-control', placeholder: "дд.мм.гггг" %>
+              <small class="form-control-feedback"> Введите Дату рождения сотрудника в формате дд.мм.гггг</small>
+          </div>
+      </div>
+      <!--/span-->
+  </div>
+  <!--/row-->
+  <div class="row">
+      <div class="col-md-6">
+          <div class="form-group">
+              <%= f.label :start_date, 'Дата начала работы', class: 'control-label' %>
+              <%= f.date_field :start_date, class: 'form-control', placeholder: "дд.мм.гггг" %>
+              <small class="form-control-feedback"> Введите Дату начала работы сотрудника в формате дд.мм.гггг</small>
+          </div>
+      </div>
+      <!--/span-->
+      <div class="col-md-6">
+            <div class="form-group">
+              <%= f.label :education, 'Образование', class: 'control-label' %>
+              <%= f.text_field :education, class: 'form-control', placeholder: "Высшее архиваторское" %>
+              <small class="form-control-feedback"> Введите полученную сотрудником Специальность</small>
+          </div>
+      </div>
+      <!--/span-->
+  </div>
+  <div class="row">
+      <div class="col-md-6">
+          <div class="form-group">
+              <%= f.label :post, 'Должность', class: 'control-label' %>
+              <%= f.date_field :post, class: 'form-control', placeholder: "Библиотекарь" %>
+              <small class="form-control-feedback"> Введите Должность сотрудника</small>
+          </div>
+      </div>
+      <div class="col-md-6">
+          <div class="form-group">
+            <%= f.label :avatar, 'Фото' %>
+            <%= image_tag(@worker.avatar_url, class:"img-responsive", style:"width: 200px;") if @worker.avatar? %>
+            <%= f.file_field :avatar, class: 'form-control' %>
+            <%= f.hidden_field :avatar_cache %>
+            <small class="form-control-feedback"> Прикрепите Фото сотрудника</small>
+          </div>
+      </div>
+  </div>
+  
+  <div class="form-actions">
+    <%= f.submit 'Сохранить',class: "btn btn-success" %>
+  </div>
+<% end %>
