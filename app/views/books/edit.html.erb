@@ -2,11 +2,11 @@
     <div class="col-lg-12">
         <div class="card">
             <div class="card-header bg-info">
-                <%= link_to 'Назад', library_book_path(@library,@book), class:'pull-right btn btn-primary btn-xs' %>
+                <%= link_to 'Назад', library_book_path(@book.library,@book), class:'pull-right btn btn-primary btn-xs' %>
                 <h4 class="m-b-0 text-white">Редактировать книгу <%=@book.name%></h4>
             </div>
             <div class="card-body">
-                <%= form_for ([@library, @book]), {:multipart => true} do |f| %>
+                <%= form_for ([@book.library, @book]), {:multipart => true} do |f| %>
                     <% if @book.errors.any? %>   
                         <div class="alert alert-warning">
                           <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">×</span> </button>
@@ -78,7 +78,7 @@
                   <!--/row-->
                   <div class="form-actions">
                     <%= f.submit 'Сохранить',class: "pull-right btn btn-success" %>
-                    <%= link_to 'Назад', library_book_path(@library,@book), class:'btn btn-primary' %>
+                    <%= link_to 'Назад', library_book_path(@book.library,@book), class:'btn btn-primary' %>
                   </div>
                 <% end %>
             </div>

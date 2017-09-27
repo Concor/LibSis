@@ -7,7 +7,7 @@
 			        <h2><%=@book.name%></h2>
 			      </div>
 			      <div class="col-md-3 text-right">
-			      	<%= link_to '', edit_library_book_path(@library,@book), class: "btn btn-outline-success ti-pencil", data: { pack: 'default' }  %>
+			      	<%= link_to '', edit_library_book_path(@book.library,@book), class: "btn btn-outline-success ti-pencil", data: { pack: 'default' }  %>
             		<%= link_to '', [@book.library, @book], class: "btn btn-outline-danger ti-trash",
                     method: :delete,
                     data: { confirm: 'Вы уверены, что хотите удалить: "'+@book.name+'" и все что с ней связано?', pack: 'default' } %>
@@ -43,11 +43,11 @@
             <div class="card-body">
                 <h4 class="card-title">Выдать книгу</h4>
                 <% if params['error_serch'] == "1" %>
-            			<div class="alert alert-warning"> <i class="ti-user"></i> Абонент с читательским билетом <strong><%=params["number"]%></strong> не найден в <%=@library.name%>. Книга не выдана.
+            			<div class="alert alert-warning"> <i class="ti-user"></i> Абонент с читательским билетом <strong><%=params["number"]%></strong> не найден в <%=@book.library.name%>. Книга не выдана.
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">×</span> </button>
                         </div>
 				<% end %>
-                <%= form_for ([@library, @book.issues.build]), {:class => 'form'} do |f| %>
+                <%= form_for ([@book.library, @book.issues.build]), {:class => 'form'} do |f| %>
                     <div class="form-group">
                     	<%= f.label :number, 'Номер читательского билета' %>
                     	<div class="input-group">
@@ -101,7 +101,7 @@
                                   <td><%= book_issue.subscriber.mname %></td>
                                   <td class="text-center"><%= book_issue.d_start %></td>
                                   <td class="text-center"><%= book_issue.d_end %></td>
-                                  <td class="text-center"><%= link_to '', library_subscriber_path(@library,book_issue.subscriber), class: "btn btn-outline-info ti-user", target:'_blank'  %> <%= link_to '', edit_library_issue_path(@library,book_issue), class: "btn btn-outline-success ti-pencil", target:'_blank'  %></td>
+                                  <td class="text-center"><%= link_to '', library_subscriber_path(@book.library,book_issue.subscriber), class: "btn btn-outline-info ti-user", target:'_blank'  %> <%= link_to '', edit_library_issue_path(@book.library,book_issue), class: "btn btn-outline-success ti-pencil", target:'_blank'  %></td>
                                 </tr>
                             <% end %>
                         </tbody>

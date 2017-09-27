@@ -5,7 +5,6 @@ class BooksController < ApplicationController
 	end
 
 	def show
-		@library = Library.find(params[:library_id])
 		@book = Book.find(params[:id])
 		@book_issues = Issue.where(book_id: params[:id])
 		@issue = Issue.new
@@ -17,7 +16,6 @@ class BooksController < ApplicationController
 	end
 
 	def edit
-	  @library = Library.find(params[:library_id])
 	  @book = Book.find(params[:id])
 	end
 
@@ -32,10 +30,9 @@ class BooksController < ApplicationController
   	end
 
   	def update
-	  @library = Library.find(params[:library_id])
 	  @book = Book.find(params[:id])
 	  if @book.update(book_params)
-	    redirect_to library_book_path(@library,@book)
+	    redirect_to library_book_path(@book.library,@book)
 	  else
 	    render 'edit'
 	  end
