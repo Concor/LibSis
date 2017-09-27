@@ -1,24 +1,7 @@
-# README
+## LibSis 1.3
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+### What's in this repository ###
 
-Things you may want to cover:
+This is the git repository for the LibSis project, open source CRM for Libraries.
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+This repository has been created to allow community members to collaborate and contribute to the project, helping to develop the LibSis ecosystem.
